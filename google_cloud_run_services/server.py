@@ -169,10 +169,10 @@ def init_database_connection():
     print("Environment:")
     pprint(dict(os.environ))
     try:
+        dsn = os.environ.get("DB_DSN",
+            "host=/cloudsql/spliceai-lookup-412920:us-central1:spliceai-lookup-db dbname=spliceai-lookup-db user=postgres")
         DATABASE_CONNECTION = psycopg2.connect(
-            host="/cloudsql/spliceai-lookup-412920:us-central1:spliceai-lookup-db",
-            database="spliceai-lookup-db",
-            user="postgres",
+            dsn=dsn,
             password=os.environ.get("DB_PASSWORD"))
         DATABASE_CONNECTION.autocommit = True
     except Exception as e:
