@@ -19,11 +19,17 @@ app = Flask(__name__)
 
 CORS(app)
 
-
+DB_DSN = os.environ.get("DB_DSN",
+    "host=/cloudsql/spliceai-lookup-412920:us-central1:spliceai-lookup-db dbname=spliceai-lookup-db user=postgres")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
 DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
+TOOL = os.environ.get("TOOL")
+GENOME_VERSION = os.environ.get("GENOME_VERSION")
+if GENOME_VERSION not in ("37", "38"):
+    raise ValueError(f'Environment variable "GENOME_VERSION" should be set to either "37" or "38" instead of: "{os.environ.get("GENOME_VERSION")}"')
+
 if not DEBUG:
     Talisman(app)
-
 
 DEFAULT_DISTANCE = 500  # maximum distance between the variant and gained/lost splice site, defaults to 500
 MAX_DISTANCE_LIMIT = 10000
@@ -64,11 +70,6 @@ TRANSCRIPT_PRIORITY_ORDER = {
     "C": 1,   # canonical transcript
     "N": 0
 }
-
-TOOL = os.environ.get("TOOL")
-GENOME_VERSION = os.environ.get("GENOME_VERSION")
-if GENOME_VERSION not in ("37", "38"):
-    raise ValueError(f'Environment variable "GENOME_VERSION" should be set to either "37" or "38" instead of: "{os.environ.get("GENOME_VERSION")}"')
 
 if TOOL == "spliceai":
     from spliceai.utils import Annotator, get_delta_scores
@@ -169,11 +170,9 @@ def init_database_connection():
     print("Environment:")
     pprint(dict(os.environ))
     try:
-        dsn = os.environ.get("DB_DSN",
-            "host=/cloudsql/spliceai-lookup-412920:us-central1:spliceai-lookup-db dbname=spliceai-lookup-db user=postgres")
         DATABASE_CONNECTION = psycopg2.connect(
-            dsn=dsn,
-            password=os.environ.get("DB_PASSWORD"))
+            dsn=DB_DSN,
+            password=DB_PASSWORD)
         DATABASE_CONNECTION.autocommit = True
     except Exception as e:
         print(f"ERROR: Unable to connect to the database: {e}")
