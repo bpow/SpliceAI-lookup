@@ -133,8 +133,10 @@ def main():
 				raise ValueError(f"Unable to find {output_json_path}")
 
 			run(f"rm ./docker/ref/GRCh{genome_version}/gencode.*.basic.annotation.transcript_annotations.json")
+			run(f"mkdir -p ./docker/ref/GRCh{genome_version}/")
 			run(f"mv {output_json_path} ./docker/ref/GRCh{genome_version}/")
 			run(f"rm ./docker/spliceai/annotations/GRCh{genome_version}/gencode.*.annotation*.txt.gz")
+			run(f"mkdir -p ./docker/spliceai/annotations/GRCh{genome_version}/")
 			run(f"mv {gencode_gtf_path.replace('.gtf.gz', '.txt.gz')} ./docker/spliceai/annotations/GRCh{genome_version}/")
 
 			if genome_version == "37":
@@ -145,6 +147,7 @@ def main():
 			# generate Pangolin annotation files
 			run(f"python3 create_pangolin_db.py {gencode_gtf_path}")
 			run(f"rm ./docker/pangolin/annotations/GRCh{genome_version}/gencode.*.annotation*.db")
+			run(f"mkdir -p ./docker/pangolin/annotations/GRCh{genome_version}/")
 			run(f"mv {gencode_gtf_path.replace('.gtf.gz', '.db')} ./docker/pangolin/annotations/GRCh{genome_version}/")
 
 		if args.gencode_version:
