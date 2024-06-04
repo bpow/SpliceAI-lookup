@@ -20,7 +20,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-DEBUG = True # if socket.gethostname() == "spliceai-lookup" else True
+DEBUG = os.environ.get("DEBUG", "true").lower() == "true"
 if not DEBUG:
     Talisman(app)
 
