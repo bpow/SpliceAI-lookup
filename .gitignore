@@ -1,5 +1,6 @@
 db_password.txt
 annotations/
+ref/
 service.backup_copy.yaml
 
 .pgpass
