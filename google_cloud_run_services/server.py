@@ -35,8 +35,8 @@ DEFAULT_DISTANCE = 500  # maximum distance between the variant and gained/lost s
 MAX_DISTANCE_LIMIT = 10000
 DEFAULT_MASK = 0        # mask scores representing annotated acceptor/donor gain and unannotated acceptor/donor loss, defaults to 0
 
-SPLICEAI_EXAMPLE_URL = f"/spliceai/?hg=38&distance=500&mask=0&variant=chr8-140300615-C-G"
-PANGOLIN_EXAMPLE_URL = f"/pangolin/?hg=38&distance=500&mask=0&variant=chr8-140300615-C-G"
+SPLICEAI_EXAMPLE_URL = f"./spliceai/?hg=38&distance=500&mask=0&variant=chr8-140300615-C-G"
+PANGOLIN_EXAMPLE_URL = f"./pangolin/?hg=38&distance=500&mask=0&variant=chr8-140300615-C-G"
 
 
 VARIANT_RE = re.compile(
@@ -50,8 +50,8 @@ VARIANT_RE = re.compile(
 )
 
 FASTA_PATH = {
-    "37": "/hg19.fa.gz",
-    "38": "/hg38.fa.gz",
+    "37": "./hg19.fa.gz",
+    "38": "./hg38.fa.gz",
 }
 
 PYFASTX_REF = {}
@@ -60,8 +60,8 @@ GENCODE_VERSION = "v46"
 
 SHARED_TRANSCRIPT_ANNOTATIONS = {}
 SHARED_TRANSCRIPT_ANNOTATION_PATHS = {
-    "37": f"/gencode.{GENCODE_VERSION}lift37.basic.annotation.transcript_annotations.json",
-    "38": f"/gencode.{GENCODE_VERSION}.basic.annotation.transcript_annotations.json",
+    "37": f"./gencode.{GENCODE_VERSION}lift37.basic.annotation.transcript_annotations.json",
+    "38": f"./gencode.{GENCODE_VERSION}.basic.annotation.transcript_annotations.json",
 }
 
 TRANSCRIPT_PRIORITY_ORDER = {
@@ -86,8 +86,8 @@ if TOOL == "spliceai":
 
     SPLICEAI_ANNOTATOR = {}
     SPLICEAI_ANNOTATION_PATHS = {
-        "37": f"/gencode.{GENCODE_VERSION}lift37.basic.annotation.txt.gz",
-        "38": f"/gencode.{GENCODE_VERSION}.basic.annotation.txt.gz",
+        "37": f"./gencode.{GENCODE_VERSION}lift37.basic.annotation.txt.gz",
+        "38": f"./gencode.{GENCODE_VERSION}.basic.annotation.txt.gz",
     }
 
 elif TOOL == "pangolin":
@@ -99,8 +99,8 @@ elif TOOL == "pangolin":
     PANGOLIN_MODELS = []
 
     PANGOLIN_ANNOTATION_PATHS = {
-        "37": f"/gencode.{GENCODE_VERSION}lift37.basic.annotation.without_chr_prefix.db",
-        "38": f"/gencode.{GENCODE_VERSION}.basic.annotation.db",
+        "37": f"./gencode.{GENCODE_VERSION}lift37.basic.annotation.without_chr_prefix.db",
+        "38": f"./gencode.{GENCODE_VERSION}.basic.annotation.db",
     }
 else:
     raise ValueError(f'Environment variable "TOOL" should be set to either "spliceai" or "pangolin" instead of: "{os.environ.get("TOOL")}"')
