@@ -1,0 +1,4 @@
+:80 {
+	reverse_proxy /spliceai/* spliceai:8080
+	reverse_proxy /pangolin/* pangolin:8080
+}
