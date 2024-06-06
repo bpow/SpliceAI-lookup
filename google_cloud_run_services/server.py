@@ -197,14 +197,12 @@ def init_database_connection():
 
 
 def run_sql(sql_query, *args):
-    with DATABASE_CONNECTION:
-        c = DATABASE_CONNECTION.cursor()
+    with DATABASE_CONNECTION.cursor() as c:
         c.execute(sql_query, *args)
         try:
             results = c.fetchall()
         except:
             results = []
-        c.close()
     return results
 
 
