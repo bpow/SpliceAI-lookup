@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import platform
 import pandas as pd
 import re
 
@@ -72,7 +73,8 @@ def main():
 					parser.error(f"Invalid genome version: {genome_version}")
 
 				run(f"wget -nc {gencode_gtf_url}")
-				run(f"wget -nc https://hgdownload.soe.ucsc.edu/admin/exe/macOSX.x86_64/gtfToGenePred")
+				system = 'linux' if platform.system() == 'Linux' else 'macOSX'
+				run(f"wget -nc https://hgdownload.soe.ucsc.edu/admin/exe/{system}.{platform.machine()}/gtfToGenePred")
 				run(f"chmod 777 gtfToGenePred")
 				gencode_gtf_paths[genome_version] = os.path.basename(gencode_gtf_url)
 		else:
