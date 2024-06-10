@@ -8,7 +8,7 @@ import re
 logging.basicConfig(level=logging.INFO, format="%(asctime)s: %(message)s")
 
 VALID_COMMANDS = {
-	"update_annotations", "build", "deploy", "test", "test2", "run",
+	"download_references", "update_annotations", "build", "deploy", "test", "test2", "run",
 }
 
 GCLOUD_PROJECT = "spliceai-lookup-412920"
@@ -57,6 +57,17 @@ def main():
 		gencode_version_number = int(args.gencode_version.lstrip("v"))
 	else:
 		gencode_version_number = None
+
+	if args.command == "download_references":
+		for version in genome_versions:
+			if "38" == version:
+				hg_version = "hg38"
+			elif "37" == version:
+				hg_version = "hg19"
+			run(f"wget -nc http://hgdownload.cse.ucsc.edu/goldenPath/{hg_version}/bigZips/{hg_version}.fa.gz")
+			run(f"pyfastx index {hg_version}.fa.gz")
+			run(f"mkdir -p ./docker/ref/GRCh{version}")
+			run(f"mv {hg_version}.fa.gz* ./docker/ref/GRCh{version}/")
 
 	if args.command == "update_annotations":
 		if not args.gencode_version and not args.gencode_gtf:
