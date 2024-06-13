@@ -4,7 +4,10 @@ flask_talisman
 gunicorn
 pandas
 BioPython
+pyfastx
 
 # sql
 psycopg2
-pyfastx
+
+spliceai @ git+https://github.com/bw2/SpliceAI
+

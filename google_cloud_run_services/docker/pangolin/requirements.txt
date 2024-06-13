@@ -13,3 +13,5 @@ PyVCF3>=1.0.3
 # sql
 psycopg2
 
+# the main event...
+pangolin @ git+https://github.com/bw2/Pangolin
