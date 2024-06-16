@@ -20,6 +20,8 @@ services:
     environment:
       DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       DB_DSN: "host=db user=${POSTGRES_USER:-spliceai-loader} dbname=${POSTGRES_USER:-spliceai-loader}"
+      CONCURRENCY: 4
+    runtime: nvidia
 
   pangolin:
     image: us-central1-docker.pkg.dev/spliceai-lookup-412920/docker/pangolin-38:latest
@@ -27,6 +29,8 @@ services:
     environment:
       DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       DB_DSN: "host=db user=${POSTGRES_USER:-spliceai-loader} dbname=${POSTGRES_USER:-spliceai-loader}"
+      CONCURRENCY: 4
+    runtime: nvidia
 
 volumes:
   db:
